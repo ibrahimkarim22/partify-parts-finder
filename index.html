@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Partify Parts Finder</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="data.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Partify Parts Finder</h1>
+  </header>
+
+  <main>
+    <p>
+      Select your vehicle details below to find the matching Partify product
+      collection.
+    </p>
+
+    <form id="parts-finder-form">
+      <div>
+        <label for="year">Year</label>
+        <select id="year" name="year">
+          <option value="">Select year</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="make">Make</label>
+        <select id="make" name="make">
+          <option value="">Select make</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="model">Model</label>
+        <select id="model" name="model">
+          <option value="">Select model</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="product-type">Product Type</label>
+        <select id="product-type" name="productType">
+          <option value="">Select product type</option>
+        </select>
+      </div>
+
+      <button type="submit">Find Parts</button>
+      <p id="message"></p>
+    </form>
+  </main>
+</body>
+</html>
