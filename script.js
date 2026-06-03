@@ -1,6 +1,7 @@
 const yearSelect = document.querySelector("#year");
 const makeSelect = document.querySelector("#make");
 const modelSelect = document.querySelector("#model");
+const productTypeSelect = document.querySelector("#product-type");
 
 function getUniqueValues(data, key) {
   const values = data.map((item) => item[key]);
@@ -32,12 +33,15 @@ const years = getUniqueValues(partsData, "year");
 
 makeSelect.disabled = true;
 modelSelect.disabled = true;
+productTypeSelect.disabled = true;
 addOptions(yearSelect, years);
 
 yearSelect.addEventListener("change", () => {
   resetSelect(makeSelect, "Select make");
   resetSelect(modelSelect, "Select model");
+  resetSelect(productTypeSelect, "Select product type");
   modelSelect.disabled = true;
+  productTypeSelect.disabled = true;
 
   if (yearSelect.value === "") {
     makeSelect.disabled = true;
@@ -53,6 +57,8 @@ yearSelect.addEventListener("change", () => {
 
 makeSelect.addEventListener("change", () => {
   resetSelect(modelSelect, "Select model");
+  resetSelect(productTypeSelect, "Select product type");
+  productTypeSelect.disabled = true;
 
   if (makeSelect.value === "") {
     modelSelect.disabled = true;
@@ -66,4 +72,25 @@ makeSelect.addEventListener("change", () => {
 
   addOptions(modelSelect, models);
   modelSelect.disabled = false;
+});
+
+modelSelect.addEventListener("change", () => {
+  resetSelect(productTypeSelect, "Select product type");
+
+  if (modelSelect.value === "") {
+    productTypeSelect.disabled = true;
+    return;
+  }
+
+  const matchingRows = partsData.filter((part) => {
+    return (
+      part.year === yearSelect.value &&
+      part.make === makeSelect.value &&
+      part.model === modelSelect.value
+    );
+  });
+  const productTypes = getUniqueValues(matchingRows, "productType");
+
+  addOptions(productTypeSelect, productTypes);
+  productTypeSelect.disabled = false;
 });
