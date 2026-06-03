@@ -1,3 +1,5 @@
+const form = document.querySelector("#parts-finder-form");
+const message = document.querySelector("#message");
 const yearSelect = document.querySelector("#year");
 const makeSelect = document.querySelector("#make");
 const modelSelect = document.querySelector("#model");
@@ -37,6 +39,7 @@ productTypeSelect.disabled = true;
 addOptions(yearSelect, years);
 
 yearSelect.addEventListener("change", () => {
+  message.textContent = "";
   resetSelect(makeSelect, "Select make");
   resetSelect(modelSelect, "Select model");
   resetSelect(productTypeSelect, "Select product type");
@@ -56,6 +59,7 @@ yearSelect.addEventListener("change", () => {
 });
 
 makeSelect.addEventListener("change", () => {
+  message.textContent = "";
   resetSelect(modelSelect, "Select model");
   resetSelect(productTypeSelect, "Select product type");
   productTypeSelect.disabled = true;
@@ -75,6 +79,7 @@ makeSelect.addEventListener("change", () => {
 });
 
 modelSelect.addEventListener("change", () => {
+  message.textContent = "";
   resetSelect(productTypeSelect, "Select product type");
 
   if (modelSelect.value === "") {
@@ -93,4 +98,35 @@ modelSelect.addEventListener("change", () => {
 
   addOptions(productTypeSelect, productTypes);
   productTypeSelect.disabled = false;
+});
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  message.textContent = "";
+
+  if (
+    yearSelect.value === "" ||
+    makeSelect.value === "" ||
+    modelSelect.value === "" ||
+    productTypeSelect.value === ""
+  ) {
+    message.textContent = "Please select a year, make, model, and product type.";
+    return;
+  }
+
+  const matchingPart = partsData.find((part) => {
+    return (
+      part.year === yearSelect.value &&
+      part.make === makeSelect.value &&
+      part.model === modelSelect.value &&
+      part.productType === productTypeSelect.value
+    );
+  });
+
+  if (!matchingPart) {
+    message.textContent = "No matching collection was found. Please try again.";
+    return;
+  }
+
+  window.location.href = matchingPart.url;
 });
